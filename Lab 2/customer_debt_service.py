@@ -7,6 +7,9 @@ class Customer:
     id: str
     debt: float
 
+class CustomerNotFoundException(Exception):
+    pass
+
 
 class CustomerDebtService:
     def __init__(self) -> None:
@@ -17,15 +20,14 @@ class CustomerDebtService:
             customer = self.__get_customer(id)
             return customer.debt
         except StopIteration:
-            return None
+            return 0
 
-    def set_debt_of_customer(self, id: str, debt: float) -> bool:
+    def set_debt_of_customer(self, id: str, debt: float) -> None:
         try:
             customer = self.__get_customer(id)
             customer.debt = debt
-            return True
         except StopIteration:
-            return False
+            raise CustomerNotFoundException()
 
     def __get_customer(self, id: str) -> Customer:
         return next((customer for customer in self.__fakeCustomers if customer.id == id))
