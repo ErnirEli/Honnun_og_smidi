@@ -13,7 +13,3 @@ class Logger(ABC):
     @abstractmethod
     def log_warning(message: str) -> None:
         pass
-
-'''
-logger = Logger()
-'''
